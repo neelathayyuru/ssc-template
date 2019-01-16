@@ -86,7 +86,7 @@
 			"Properties": {
 				"Tags": [{
 					"Key": "Name",
-					"Value": "IGW"
+					"Value": {"Ref":"VPCNAME"}-"IGW"
 				},
 				{
 					"Key": "CloudFormationStack",
@@ -220,7 +220,22 @@
 					}
 				}]
 			}
-		}
+		},
+		"WebServer": {
+          "Type": "AWS::EC2::Instance",  
+          "Properties": {
+          "ImageId"            : " ami-0080e4c5bc078760e",
+          "InstanceType"       : "t2.micro",
+          "KeyName"            : "novkey",
+          "NetworkInterfaces" : [{
+          "AssociatePublicIpAddress" : "true",
+          "DeviceIndex"              : "0",
+          "DeleteOnTermination"      : "true",
+          "SubnetId"                 : {"Ref":"PublicSubnet"},
+          "GroupSet"                 : [ "sg-0d4312d9dcede9c67" ]
+		  }]
+      }
+    }
 	},
 	"Outputs": {
 		"VPCId": {
